@@ -67,6 +67,9 @@ pub struct Cook {
     /// Build in release mode.
     #[clap(long)]
     release: bool,
+    /// Use nightly channel.
+    #[clap(long)]
+    nightly: bool,
     /// Run `cargo check` instead of `cargo build`. Primarily useful for speeding up your CI pipeline.
     #[clap(long)]
     check: bool,
@@ -129,6 +132,7 @@ fn _main() -> Result<(), anyhow::Error> {
             recipe_path,
             profile,
             release,
+            nightly,
             check,
             target,
             no_default_features,
@@ -207,6 +211,7 @@ fn _main() -> Result<(), anyhow::Error> {
             recipe
                 .cook(CookArgs {
                     profile,
+                    nightly,
                     check,
                     default_features,
                     features,

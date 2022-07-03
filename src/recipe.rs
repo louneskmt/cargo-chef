@@ -19,6 +19,7 @@ pub struct TargetArgs {
 
 pub struct CookArgs {
     pub profile: OptimisationProfile,
+    pub nightly: bool,
     pub check: bool,
     pub default_features: DefaultFeatures,
     pub features: Option<HashSet<String>>,
@@ -72,6 +73,7 @@ pub enum DefaultFeatures {
 fn build_dependencies(args: &CookArgs) {
     let CookArgs {
         profile,
+        nightly,
         check,
         default_features,
         features,
@@ -86,6 +88,9 @@ fn build_dependencies(args: &CookArgs) {
         ..
     } = args;
     let mut command = Command::new("cargo");
+    if *nightly {
+        command.arg("+nightly");
+    }
     let command_with_args = if *check {
         command.arg("check")
     } else {
